@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  Clima
 //
-//  Created by Marcelo Rodrigues de Sousa on 21/09/21.
+//  Created by Giovanna Rodrigues on 21/09/21.
 //
 
 import UIKit
