@@ -2,7 +2,7 @@
 //  WeatherData.swift
 //  Clima
 //
-//  Created by Marcelo Rodrigues de Sousa on 23/09/21.
+//  Created by Giovanna Rodrigues on 23/09/21.
 //
 
 import Foundation

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, WeatherMenagerDelegate{
 
     @IBOutlet weak var climaImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -19,6 +19,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchTextField.delegate = self
+        weatherManeger.delegate = self
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -34,6 +35,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             weatherManeger.fetchWeather(city: city)
         }
         searchTextField.text = ""
+    }
+    func didUpdateWeather(_ weather: WeatherModel){
+        
     }
     
 }

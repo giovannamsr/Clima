@@ -2,7 +2,7 @@
 //  WeatherModel.swift
 //  Clima
 //
-//  Created by Marcelo Rodrigues de Sousa on 23/09/21.
+//  Created by Giovanna Rodrigues on 23/09/21.
 //
 
 import Foundation
@@ -11,6 +11,9 @@ struct WeatherModel {
     let conditionId : Int
     let city : String
     let temperature : Double
+    var stringTemp : String {
+        return String(format: "%.1f", temperature)
+    }
     var condition : String {
         switch conditionId {
         case 200...202,221,230...232:
