@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ViewController: UIViewController{
 
@@ -14,13 +15,18 @@ class ViewController: UIViewController{
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
     
-    var weatherManeger = WeatherMenager()
+    var weatherManager = WeatherManager()
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         searchTextField.delegate = self
-        weatherManeger.delegate = self
-        weatherManeger.fetchWeather(city: "Uberlandia")
+        weatherManager.delegate = self
+        locationManager.delegate = self
+        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
 }
@@ -38,15 +44,15 @@ extension ViewController : UITextFieldDelegate{
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let city = searchTextField.text {
-            weatherManeger.fetchWeather(city: city)
+            weatherManager.fetchWeather(city: city)
         }
         searchTextField.text = ""
     }
 }
-//MARK: - WeatherMenagerDelegate
-extension ViewController : WeatherMenagerDelegate{
+//MARK: - WeatherManagerDelegate
+extension ViewController : WeatherManagerDelegate{
     
-    func didUpdateWeather(_ weatherManager : WeatherMenager, weather: WeatherModel){
+    func didUpdateWeather(_ weatherManager : WeatherManager, weather: WeatherModel){
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.stringTemp
             self.cityLabel.text = weather.city
@@ -56,4 +62,24 @@ extension ViewController : WeatherMenagerDelegate{
     func weatherManagerDidFail(error: Error) {
         print(error)
     }
+}
+
+//MARK: - CLLocationManagerDelegate
+extension ViewController : CLLocationManagerDelegate{
+    
+    @IBAction func currentLocationButtonPressed(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last{
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            weatherManager.fetchWeather(lat: lat, long: lon)
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("location error: \(error)")
+    }
+    
 }
