@@ -16,7 +16,9 @@ struct WeatherMenager {
     let generalUrl = "https://api.openweathermap.org/data/2.5/weather?appid=c27892cd89e32e510d4006add996f93c&units=metric"
     
     func fetchWeather(city : String){
-        let cityUrl = "\(generalUrl)&q=\(city)"
+        var fixedCity = city.folding(options: .diacriticInsensitive, locale: .current)
+        fixedCity = String(fixedCity.map{$0 == " " ? "+" : $0})
+        let cityUrl = "\(generalUrl)&q=\(fixedCity)"
         requestData(cityUrl)
     }
     

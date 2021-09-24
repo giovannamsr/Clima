@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITextFieldDelegate, WeatherMenagerDeleg
         super.viewDidLoad()
         searchTextField.delegate = self
         weatherManeger.delegate = self
+        weatherManeger.fetchWeather(city: "Uberlandia")
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
